@@ -4,11 +4,11 @@
 
 > Accessible, fuzzy search typeahead component.
 
+<!-- REPO_URL -->
+
 This component uses the lightweight [fuzzy](https://github.com/mattyork/fuzzy) library for client-side, fuzzy search and follows [WAI-ARIA guidelines](https://www.w3.org/TR/wai-aria-practices/examples/combobox/aria1.1pattern/listbox-combo.html).
 
 Try it in the [Svelte REPL](https://svelte.dev/repl/a1b828d80de24f7e995b2365782c8d04?version=3.24.1).
-
-<!-- REPO_URL -->
 
 ---
 
@@ -66,24 +66,32 @@ Pass an array of objects to the `data` prop. Use the `extractor` to specify the 
 ```
 <!-- prettier-ignore-end -->
 
-### Custom results
+### Custom-styled results
 
 By default, this component uses the `fuzzy` library to highlight matching characters with the `mark` element.
 
 Use a slot to render custom results.
 
-<!-- prettier-ignore-start -->
 ```svelte
 <Typeahead {data} {extract} let:result let:index>
   <div style="color: red; font-weight: bold;">
-    {@html result.string} {index}
+    {@html result.string}
+    {index}
   </div>
 </Typeahead>
 
 ```
-<!-- prettier-ignore-end -->
 
-### Disable and Filter Items
+### Limit the number of results
+
+Use the `limit` prop to specify the maximum number of results to display. The default limit is `Infinity`.
+
+```svelte
+<Typeahead limit={2} {data} {extract} />
+
+```
+
+### Disable and filter items
 
 Use the `filter` to filter Items out and `disable` to disable them in the result set.
 
@@ -140,6 +148,7 @@ Set `focusAfterSelect` to `true` to re-focus the search input after selecting a 
 | inputAfterSelect | `"update" or "clear" or "keep"`(default:`"update"`) | Set to `"clear"` to clear the `value` after selecting a result. Set to `"keep"` keep the search field unchanged after a selection. |
 | results          | `FuzzyResult[]` (default: `[]`)                     | Raw fuzzy results from the [fuzzy](https://github.com/mattyork/fuzzy) module                                                       |
 | focusAfterSelect | `boolean` (default: `false`)                        | Set to `true` to re-focus the input after selecting a result.                                                                      |
+| limit            | `number` (default: `Infinity`)                      | Specify the maximum number of results to return                                                                                    |
 | `...$$restProps` | (forwarded to `Search` component)                   | All other props are forwarded to the input element.                                                                                |
 
 ### Dispatched events
